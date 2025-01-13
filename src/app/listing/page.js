@@ -38,7 +38,7 @@ export default function List() {
     };
 
     fetchSavedLists();
-  }, []);
+  }, [router]);
 
   const handleSelectList = (listId) => {
     const list = savedLists.find((item) => item._id === listId);
