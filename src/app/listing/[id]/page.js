@@ -36,7 +36,7 @@ export default function ListingDetails() {
           setListDetails(fetchedData);
           setFilteredImages(fetchedData.savedImages || []);
         } catch (err) {
-          setError('Error fetching list details.');
+          setError('Error fetching list details or list have been removed');
         } finally {
           setLoading(false);
         }

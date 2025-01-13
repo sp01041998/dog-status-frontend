@@ -21,7 +21,7 @@ export default function Search() {
 
     if (!authToken) {
       router.push("/login");
-    } 
+    }
   }, []);
 
   useEffect(() => {
@@ -44,18 +44,24 @@ export default function Search() {
   }, []);
 
   const handleFilter = (e) => {
-    const queryValue = e.target.value.trim()
-    setQuery(queryValue)
+    const queryValue = query
+    if (!queryValue) {
+      setFilteredDogImages(dogImages)
+      return
+    }
     const regex = new RegExp(queryValue.replace(/x/gi, '\\d'), 'i')
-  
-    const filtered = listDetails?.savedImages.filter((image) => {
+    const filtered = filteredDogImages.filter((image) => {
       return regex.test(image.statusCode.toString())
     });
-  
+
     setFilteredDogImages(filtered || [])
   };
-  
-  
+
+  const redirectToLisitng = () => {
+    router.push("/listing")
+  }
+
+
 
   const handleChange = (e) => {
     setQuery(e.target.value)
@@ -68,7 +74,7 @@ export default function Search() {
     }
 
     try {
-      console.log('Saved images:', filteredDogImages);    
+      console.log('Saved images:', filteredDogImages);
       const imageIds = filteredDogImages.map(dog => dog._id);
       const authToken = localStorage.getItem('authToken')
       if (!authToken) {
@@ -100,8 +106,9 @@ export default function Search() {
 
   return (
     <div style={{ textAlign: 'center', padding: '20px' }}>
+
       <h1>HTTPS Status Dogs</h1>
-      <p>Dogs for every HyperText Transfer Protocol response status code.</p>
+      <p style={{ margin: '20px' }}>Dogs for every HyperText Transfer Protocol response status code.</p>
       <input
         type="text"
         placeholder="Enter status code (e.g., 2xx, 20x, 203)"
@@ -116,11 +123,22 @@ export default function Search() {
           borderRadius: '5px',
         }}
       />
+      <button style={{
+        padding: '10px 20px',
+        fontSize: '16px',
+        marginTop: '20px',
+        borderRadius: '5px',
+        cursor: 'pointer',
+        backgroundColor: 'blue',
+        color: 'white',
+        fontWeight: '600',
+        marginLeft : '20px'
+      }} onClick={redirectToLisitng}>See Saved List</button>
       {loading && <p>Loading images...</p>}
       {error && <p style={{ color: 'red' }}>{error}</p>}
       <div style={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', 
+        gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
         gap: '20px',
         padding: '20px'
       }}>
@@ -144,6 +162,8 @@ export default function Search() {
           </div>
         ))}
       </div>
+
+      {!filteredDogImages.length && <p style={{ fontSize: '16px', color: 'blue', }}>No image found for given status code</p>}
 
       {!isListNameInputVisible && (
         <button
