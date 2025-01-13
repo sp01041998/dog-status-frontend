@@ -91,8 +91,8 @@ export default function List() {
                   <span
                     style={{
                       cursor: "pointer",
-                      color: selectedList?._id === list._id ? 'green' : 'blue', // Change color if selected
-                      fontWeight: selectedList?._id === list._id ? 'bold' : 'normal', // Bold if selected
+                      color: selectedList?._id === list._id ? 'green' : 'blue',
+                      fontWeight: selectedList?._id === list._id ? 'bold' : 'normal', 
                     }}
                     onClick={() => handleSelectList(list._id)}
                   >

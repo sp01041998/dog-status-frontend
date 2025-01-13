@@ -7,7 +7,7 @@ import { StyledEngineProvider } from '@mui/material/styles';
 
 const theme = createTheme({
   palette: {
-    mode: 'light', // Change to 'dark' if needed
+    mode: 'light',
   },
 });
 
