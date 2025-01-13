@@ -13,6 +13,7 @@ import Stack from '@mui/material/Stack';
 import MuiCard from '@mui/material/Card';
 import { styled } from '@mui/material/styles';
 import axios from 'axios';
+import { useRouter } from "next/navigation";
 
 const Card = styled(MuiCard)(({ theme }) => ({
     display: 'flex',
@@ -63,6 +64,7 @@ export default function SignUp(props) {
     const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
     const [nameError, setNameError] = React.useState(false);
     const [nameErrorMessage, setNameErrorMessage] = React.useState('');
+    const router = useRouter();
 
     const validateInputs = () => {
         const email = document.getElementById('email');
@@ -122,7 +124,9 @@ export default function SignUp(props) {
         try {
             const response = await axios.post('https://dog-status-backend.onrender.com/user/signup', formData);
             console.log('Success:', response.data);
+            localStorage.setItem('authToken', response.data.data.token);
             alert('User registered successfully!');
+            router.push("/search");
         } catch (error) {
             console.error('Error:', error.response?.data || error.message);
             alert('Error registering user. Please try again.');
