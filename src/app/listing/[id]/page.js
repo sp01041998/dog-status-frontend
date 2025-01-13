@@ -115,7 +115,7 @@ export default function ListingDetails() {
               <div
                 style={{
                   display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', // Larger images
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
                   gap: '20px',
                 }}
               >
@@ -129,7 +129,7 @@ export default function ListingDetails() {
                         height: 'auto',
                         objectFit: 'cover',
                         borderRadius: '8px',
-                        maxHeight: '500px', // Increased max height
+                        maxHeight: '500px',
                       }}
                     />
                     <p>{image.imageName}</p>
