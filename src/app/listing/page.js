@@ -10,7 +10,22 @@ export default function List() {
   const [error, setError] = useState(null);
   const [selectedList, setSelectedList] = useState(null);
   const router = useRouter();
+
   
+  const fetchSavedLists = async () => {
+    try {
+      const response = await axios.get('https://dog-status-backend.onrender.com/user/saved-lists', {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+        },
+      });
+      setSavedLists(response.data.data);
+      setLoading(false);
+    } catch (err) {
+      setError('Error fetching saved lists.');
+      setLoading(false);
+    }
+  };
 
 
   useEffect(() => {
@@ -18,27 +33,42 @@ export default function List() {
 
     if (!authToken) {
       router.push("/login");
-    } 
+    } else{
+      fetchSavedLists()
+    }
   }, []);
 
+
   useEffect(() => {
-    const fetchSavedLists = async () => {
-      try {
-        const response = await axios.get('https://dog-status-backend.onrender.com/user/saved-lists', {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('authToken')}`,
-          },
-        });
-        setSavedLists(response.data.data);
-        setLoading(false);
-      } catch (err) {
-        setError('Error fetching saved lists.');
-        setLoading(false);
-      }
+    const handleRouteChange = () => {
+      fetchSavedLists();
     };
 
-    fetchSavedLists();
-  }, [router]);
+    router.events.on("routeChangeComplete", handleRouteChange);
+
+    return () => {
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, [router.events]);
+
+  // useEffect(() => {
+  //   const fetchSavedLists = async () => {
+  //     try {
+  //       const response = await axios.get('https://dog-status-backend.onrender.com/user/saved-lists', {
+  //         headers: {
+  //           Authorization: `Bearer ${localStorage.getItem('authToken')}`,
+  //         },
+  //       });
+  //       setSavedLists(response.data.data);
+  //       setLoading(false);
+  //     } catch (err) {
+  //       setError('Error fetching saved lists.');
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchSavedLists();
+  // }, [router]);
 
   const handleSelectList = (listId) => {
     const list = savedLists.find((item) => item._id === listId);
