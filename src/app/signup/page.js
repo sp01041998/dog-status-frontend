@@ -120,7 +120,7 @@ export default function SignUp(props) {
         };
 
         try {
-            const response = await axios.post('http://localhost:3003/user/signup', formData);
+            const response = await axios.post('https://dog-status-backend.onrender.com/user/signup', formData);
             console.log('Success:', response.data);
             alert('User registered successfully!');
         } catch (error) {

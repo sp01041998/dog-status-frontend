@@ -24,7 +24,7 @@ export default function List() {
   useEffect(() => {
     const fetchSavedLists = async () => {
       try {
-        const response = await axios.get('http://localhost:3003/user/saved-lists', {
+        const response = await axios.get('https://dog-status-backend.onrender.com/user/saved-lists', {
           headers: {
             Authorization: `Bearer ${localStorage.getItem('authToken')}`,
           },
@@ -54,7 +54,7 @@ export default function List() {
         return;
       }
   
-      const response = await axios.delete(`http://localhost:3003/user/saved-list/${listId}`, {
+      const response = await axios.delete(`https://dog-status-backend.onrender.com/user/saved-list/${listId}`, {
         headers: {
           Authorization: `Bearer ${authToken}`,
         },

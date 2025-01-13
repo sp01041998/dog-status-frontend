@@ -27,7 +27,7 @@ export default function ListingDetails() {
     useEffect(() => {
       const fetchListDetails = async () => {
         try {
-          const response = await axios.get(`http://localhost:3003/user/saved-list/${id}`, {
+          const response = await axios.get(`https://dog-status-backend.onrender.com/user/saved-list/${id}`, {
             headers: {
               Authorization: `Bearer ${localStorage.getItem('authToken')}`,
             },
@@ -70,7 +70,7 @@ export default function ListingDetails() {
         const updatedImages = filteredImages.filter((image) => image._id !== imageId);
         setFilteredImages(updatedImages);
         const response = await axios.post(
-          `http://localhost:3003/user/saved-list/${id}/image/${imageId}`,
+          `https://dog-status-backend.onrender.com/user/saved-list/${id}/image/${imageId}`,
           {},
           {
             headers: {

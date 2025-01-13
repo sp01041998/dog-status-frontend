@@ -27,7 +27,7 @@ export default function Search() {
   useEffect(() => {
     const fetchDogImages = async () => {
       try {
-        const response = await axios.get('http://localhost:3003/image')
+        const response = await axios.get('https://dog-status-backend.onrender.com/image')
         console.log(response.data.data)
         const imageData = response.data.data
         imageData.sort((a, b) => a.statusCode - b.statusCode)
@@ -80,7 +80,7 @@ export default function Search() {
         listName: listName,
       };
       const response = await axios.post(
-        'http://localhost:3003/user/saved-list',
+        'https://dog-status-backend.onrender.com/user/saved-list',
         data,
         {
           headers: {
