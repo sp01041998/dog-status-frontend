@@ -30,7 +30,6 @@ export default function List() {
 
   useEffect(() => {
     const authToken = localStorage.getItem("authToken");
-
     if (!authToken) {
       router.push("/login");
     } else{
@@ -40,16 +39,8 @@ export default function List() {
 
 
   useEffect(() => {
-    const handleRouteChange = () => {
-      fetchSavedLists();
-    };
-
-    router.events.on("routeChangeComplete", handleRouteChange);
-
-    return () => {
-      router.events.off("routeChangeComplete", handleRouteChange);
-    };
-  }, [router.events]);
+    fetchSavedLists();
+  }, [router.pathname]);
 
   // useEffect(() => {
   //   const fetchSavedLists = async () => {
